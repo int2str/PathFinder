@@ -149,3 +149,7 @@ The -t paramter displays optional timing information.
 A tilemap path can be traced using the following command:
 
 `./build/trace_path data/5x5.json`
+
+Path finding can be animated using this command:
+
+`./build/animate_path data/map.json`
