@@ -1,0 +1,6 @@
+[submodule "lib/jsonlib"]
+	path = lib/jsonlib
+	url = https://github.com/int2str/jsonlib.git
+[submodule "lib/testrunner"]
+	path = lib/testrunner
+	url = https://github.com/int2str/testrunner.git
