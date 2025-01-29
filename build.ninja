@@ -37,9 +37,13 @@ build $b/trace_path: link $b/path_trace.o
   libs = -lfmt
 
 build $b/pathfinder_tests: link $b/testrunner_main.o $
+  $b/tilemap.o $
   $b/tilemap_tests.o
+  libs = -lfmt
 
 build $b/path_trace.o: cxx src/path_trace.cc
+build $b/tilemap.o: cxx src/tilemap.cc
+
 build $b/tilemap_tests.o: cxx src/tilemap_tests.cc
 
 build $b/testrunner_main.o: cxx lib/testrunner/src/testrunner_main.cc
