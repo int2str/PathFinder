@@ -57,7 +57,7 @@ namespace tilemap {
 //
 // NOTE(AE) - This function is currently hard-coded to consider layer 0 only.
 //
-[[nodiscard]] auto gridFromJson(std::string_view json_text)
+[[nodiscard]] auto fromJson(std::string_view json_text)
     -> std::optional<std::pair<Info, Grid>> {
   const auto maybe_json = json::Json::parse(json_text);
   if (!maybe_json) return std::nullopt;

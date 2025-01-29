@@ -1,46 +1,21 @@
 #include "json/json.hh"
 #include "src/tilemap.hh"
+#include "src/tilemap_internal.hh"
 #include "testrunner/testrunner.h"
-#include "tilemap.hh"
-#include "tilemap_internal.hh"
 #include "utils/coordinate.hh"
 
 namespace {
 
-constexpr auto TWO_BY_ONE_TEST_MAP = R"(
-{
-  "layers": [{
-    "tileset": "MapEditor Tileset_woodland.png",
-    "data": [ 8.4, 3 ]
-  }],
-  "tilesets": [{
-    "tilewidth": 32,
-    "tileheight": 32
-  }],
-  "canvas": { "width": 64, "height": 32 }
-}
-)";
+constexpr auto THREE_BY_ONE_TEST_MAP =
+    R"({"layers":[{"tileset":"MapEditor Tileset_woodland.png",
+"data":[8.4,-1,0.6]}],"tilesets":[{"tilewidth":32,"tileheight":32}],
+"canvas":{"width":96,"height":32}})";
 
-constexpr auto FIVE_BY_FIVE_TEST_MAP = R"(
-{
-  "layers": [{
-      "name": "world",
-      "tileset": "MapEditor Tileset_woodland.png",
-      "data": [
-        8.4, 3, -1, -1, -1, -1, 3, -1, -1, -1, -1, 3, -1,
-        3, -1, -1, -1, -1, 3, -1, -1, -1, -1, 3, 0.6]
-  }],
-  "tilesets": [{
-      "name": "MapEditor Tileset_woodland.png",
-      "image": "MapEditor Tileset_woodland.png",
-      "imagewidth": 512,
-      "imageheight": 512,
-      "tilewidth": 32,
-      "tileheight": 32
-  }],
-  "canvas": { "width": 160, "height": 160 }
-}
-)";
+constexpr auto FIVE_BY_FIVE_TEST_MAP =
+    R"({"layers":[{"tileset":"MapEditor Tileset_woodland.png",
+"data":[8.4,3,-1,-1,-1,-1,3,-1,-1,-1,-1,3,-1,3,-1,-1,-1,
+-1,3,-1,-1,-1,-1,3,0.6]}],"tilesets":[{"tilewidth":32,"tileheight":32}],
+"canvas":{"width":160,"height":160}})";
 
 }  // namespace
 
@@ -88,25 +63,25 @@ TEST(Tileset_Can_parse_JSON_tileset_map_data) {
 }
 
 TEST(Tileset_Can_parse_minimal_asymetrical_map) {
-  const auto& maybe_grid = tilemap::gridFromJson(TWO_BY_ONE_TEST_MAP);
-  ASSERT_TRUE(maybe_grid);
+  const auto& maybe_map = tilemap::fromJson(THREE_BY_ONE_TEST_MAP);
+  ASSERT_TRUE(maybe_map);
 
-  const auto& [info, grid] = *maybe_grid;
-  EXPECT_EQ(info.canvas_size.x, 64);
+  const auto& [info, grid] = *maybe_map;
+  EXPECT_EQ(info.canvas_size.x, 96);
   EXPECT_EQ(info.canvas_size.y, 32);
   EXPECT_EQ(info.tile_size.x, 32);
   EXPECT_EQ(info.tile_size.y, 32);
   EXPECT_EQ(info.texture_filename, "MapEditor Tileset_woodland.png");
 
-  EXPECT_EQ(grid.width(), 2);
+  EXPECT_EQ(grid.width(), 3);
   EXPECT_EQ(grid.height(), 1);
 }
 
 TEST(Tileset_Can_parse_5x5_map) {
-  const auto& maybe_grid = tilemap::gridFromJson(FIVE_BY_FIVE_TEST_MAP);
-  ASSERT_TRUE(maybe_grid);
+  const auto& maybe_map = tilemap::fromJson(FIVE_BY_FIVE_TEST_MAP);
+  ASSERT_TRUE(maybe_map);
 
-  const auto& [info, grid] = *maybe_grid;
+  const auto& [info, grid] = *maybe_map;
   EXPECT_EQ(info.canvas_size.x, 160);
   EXPECT_EQ(info.canvas_size.y, 160);
   EXPECT_EQ(info.tile_size.x, 32);

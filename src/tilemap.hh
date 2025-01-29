@@ -40,7 +40,7 @@ struct RouteMapping {
 //
 // Note that this is currently hard-coded to consider layer 0 only.
 //
-[[nodiscard]] auto gridFromJson(std::string_view json_text)
+[[nodiscard]] auto fromJson(std::string_view json_text)
     -> std::optional<std::pair<Info, Grid>>;
 
 }  // namespace tilemap
