@@ -2,15 +2,16 @@
 
 ![CI workflow status](https://github.com/int2str/PathFinder/actions/workflows/main.yml/badge.svg)
 
-This program parses a RiskyLab.com/tilemap compatible tilemap file and calculates
-a path for a battle unit of a given color to the circular target of the same color.
+This program provides utilities to parses a RiskyLab.com/tilemap compatible tilemap
+file and to calculate a path for one or more battle units of a given color to the
+circular target of the same color.
 
 ![Battle units and targets](docs/units_and_targets.png)
 
 ## trace_path utility
 
 The **trace_path** utility can be used to find the path for one or multiple
-units to their target, and output the result to STDOUT in JSON format.
+units to their target. The resulting paths are printed to STDOUT in JSON format.
 
 For example, this simple 5x5 map:
 
@@ -41,6 +42,10 @@ Yields the following output in JSON format:
 ]
 ```
 
+If multiple units can reach their respective targets, additional array
+entries will be present. An error will be shown if no unit can reach its
+target.
+
 ## animate_path utility
 
 ![Animated map single path example](docs/single_path.png)
@@ -63,12 +68,12 @@ or cannot reach their target (see bottom right corner below) will not move.
 
 Dijksta's path finding algorithm is applied to the map and any unit of a given
 color is matched to a target of the same color. A generic, priority queue based
-implementation of the algorithm to determine the distance from any target to any
-unit.
+implementation of the algorithm is used to determine the distance from any
+target point to any unit starting position.
 
 The A-star algorithm, which enhances Dijkstra's algorithm through the addition
-of a cost function to narrow down the search space could be used to further
-enhance performance.
+of a cost function to narrow down the search space could be used alternatively,
+to further enhance performance.
 
 ## A note on RiskyLab.com tilemaps...
 
@@ -83,7 +88,7 @@ tile in the tilesheet. A value of "-1" denotes no tile at that position.
 For example:
 The value of "1.23" denotes a tile from the tilesheet at position x=1, y=23.
 
-This causes a severe and easily reproducible bug:
+**This causes a severe and easily reproducible bug:**
 A tile in a row divisible by 10 cannot be stored in the layer data.
 In other words, the value of "2.1" and "2.10" are both parsed as x=2, y=1...
 At this time (January 2025) this bug is inherent to the editor.
@@ -94,22 +99,22 @@ At this time (January 2025) this bug is inherent to the editor.
 
 [https://github.com/int2str/testrunner](https://github.com/int2str/testrunner)
 
-PathFinder uses my 'TestRunner' unit test framework for some simple unit tests.
-In production, much more mature testing frameworks such as Google's gtest or
-Catch2 are available.
+PathFinder uses the 'TestRunner' unit test framework for some simple unit tests.
+For production level sortware, much more mature testing frameworks such as
+Google's gtest framework or the Catch2 library are available.
 
 ### jsonlib - JSON file parser
 
 [https://github.com/int2str/jsonlib](https://github.com/int2str/jsonlib)
 
-To parse tile maps, my own 'jsonlib' library is used. As with 'TestRunner' above,
+To parse tile maps, the 'jsonlib' library is used. As with 'TestRunner' above,
 more mature (better, faster, stronger) JSON parsers (such as nlohmann/json) are
 available. 'jsonlib', as with 'TestRunner' were created recreationally.
 
 ### libfmt - C++ formatting library
 
 While std::print / std::println have finally landed with C++23, support is
-still not universal on all platforms. For simplicity, this project used
+still not universal on all platforms. For simplicity, this project uses
 libfmt for now.
 
 ### SFML - Simple and Fast Multimedia Library
@@ -139,13 +144,15 @@ On Ubuntu this can be achieved by installing these packages:
 
 `sudo apt install libfmt-dev libsfml-dev`
 
+To compile, simply type `ninja` in the project root.
+
 ### Running
 
-Tests can be run using the following command:
+Tests can be run using the following command (the optional -v paramter
+enables additional information):
 
-`./build/pathfinder_tests -t`
+`./build/pathfinder_tests -v`
 
-The -t paramter displays optional timing information.
 A tilemap path can be traced using the following command:
 
 `./build/trace_path data/5x5.json`
