@@ -41,6 +41,24 @@ Yields the following output in JSON format:
 ]
 ```
 
+## animate_path utility
+
+![Animated map single path example](docs/single_path.png)
+
+The **animate_path** utility graphically animates the path for one or more
+units to their respecive target(s). The animation begins automatically and
+can be (somewhat) controlled using these keys:
+
+- **ESC** closes the window
+- **P** pauses the animation
+- **R** resets the units back to their starting positions
+
+If multiple units would occupy the same space, units will yield to other units
+(see green units in multi_path example). Units that have no target on the map
+or cannot reach their target (see bottom right corner below) will not move.
+
+![Animated map multi path example](docs/multi_path.png)
+
 ## Algorithm
 
 Dijksta's path finding algorithm is applied to the map and any unit of a given

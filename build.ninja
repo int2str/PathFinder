@@ -38,6 +38,12 @@ build $b/trace_path: link $b/path_trace.o $
   $b/tilemap.o
   libs = -lfmt
 
+build $b/animate_path: link $b/path_animate.o $
+  $b/path_finder.o $
+  $b/tilemap.o $
+  $b/window.o
+  libs = -lfmt -lsfml-graphics -lsfml-window -lsfml-system
+
 build $b/pathfinder_tests: link $b/testrunner_main.o $
   $b/path_finder.o $
   $b/path_finder_tests.o $
@@ -45,12 +51,13 @@ build $b/pathfinder_tests: link $b/testrunner_main.o $
   $b/tilemap_tests.o
   libs = -lfmt
 
+build $b/path_animate.o: cxx src/path_animate.cc
 build $b/path_trace.o: cxx src/path_trace.cc
 build $b/path_finder.o: cxx src/path_finder.cc
-build $b/tilemap.o: cxx src/tilemap.cc
-
 build $b/path_finder_tests.o: cxx src/path_finder_tests.cc
+build $b/tilemap.o: cxx src/tilemap.cc
 build $b/tilemap_tests.o: cxx src/tilemap_tests.cc
+build $b/window.o: cxx src/window.cc
 
 build $b/testrunner_main.o: cxx lib/testrunner/src/testrunner_main.cc
 
