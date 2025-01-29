@@ -52,6 +52,24 @@ The A-star algorithm, which enhances Dijkstra's algorithm through the addition
 of a cost function to narrow down the search space could be used to further
 enhance performance.
 
+## A note on RiskyLab.com tilemaps...
+
+The tilemaps produced by the riskylab.com/tilemap online tile map editor use
+a, well, _curious_ format for layer data.
+
+The coordinates of the tile in the tilesheet are encoded in JSON as a floating
+point number. The integer component denotes the "X" coordinate of the tile in
+the tilesheet, while the fractional component denotes the "Y" coodinate of the
+tile in the tilesheet. A value of "-1" denotes no tile at that position.
+
+For example:
+The value of "1.23" denotes a tile from the tilesheet at position x=1, y=23.
+
+This causes a severe and easily reproducible bug:
+A tile in a row divisible by 10 cannot be stored in the layer data.
+In other words, the value of "2.1" and "2.10" are both parsed as x=2, y=1...
+At this time (January 2025) this bug is inherent to the editor.
+
 ## Dependencies
 
 ### testrunner - Unit test framework
