@@ -13,8 +13,7 @@ namespace Utils {
 //
 // Returns an empty string if the file could not be read.
 //
-[[nodiscard]] constexpr auto readFile(const std::filesystem::path& path)
-    -> std::string {
+[[nodiscard]] auto readFile(const std::filesystem::path& path) -> std::string {
   auto file    = std::ifstream(path);
   auto content = std::string{};
   auto line    = std::string{};
