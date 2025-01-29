@@ -18,7 +18,7 @@ namespace tilemap::internal {
 // tile widths and heights for the relevant layer and does not attempt to match
 // tileset filenames etc.
 //
-[[nodiscard]] constexpr auto mapInfoFromJson(const json::Json& json)
+[[nodiscard]] auto mapInfoFromJson(const json::Json& json)
     -> std::optional<Info> {
   auto map_info = Info{};
 
